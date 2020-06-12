@@ -5,6 +5,9 @@
   "bin": {
     "reverse-tunnel": "./bin/console.js"
   },
+  "files": [
+    "bundle"
+  ],
   "repository": "https://github.com/muhammetaliakbay/reverse-tunnel",
   "author": "https://github.com/muhammetaliakbay",
   "devDependencies": {
@@ -24,7 +27,6 @@
     "rollup-plugin-scss": "^2.5.0",
     "rollup-plugin-typescript2": "^0.27.1",
     "sass-loader": "^8.0.2",
-    "source-map-support": "^0.5.19",
     "style-loader": "^1.2.1",
     "ts-loader": "^7.0.5",
     "ts-node": "^8.10.2",
@@ -42,6 +44,7 @@
     "build-watch": "webpack --watch --mode=development"
   },
   "dependencies": {
+    "source-map-support": "^0.5.19",
     "@material-ui/core": "^4.10.2",
     "@material-ui/icons": "^4.9.1",
     "@muhammetaliakbay/json-config": "^0.0",
