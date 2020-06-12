@@ -1,6 +1,6 @@
 {
   "name": "@muhammetaliakbay/reverse-tunnel",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "main": "bundle/main.js",
   "bin": {
     "reverse-tunnel": "./bin/console.js"
