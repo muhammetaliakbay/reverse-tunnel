@@ -1,6 +1,6 @@
 {
   "name": "@muhammetaliakbay/reverse-tunnel",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "main": "bundle/main.js",
   "bin": {
     "reverse-tunnel": "./bin/console.js"
@@ -44,8 +44,8 @@
   "dependencies": {
     "@material-ui/core": "^4.10.2",
     "@material-ui/icons": "^4.9.1",
-    "@muhammetaliakbay/json-config": "^0.0.2",
-    "@muhammetaliakbay/structure-check": "^0.0.7",
+    "@muhammetaliakbay/json-config": "^0.0",
+    "@muhammetaliakbay/structure-check": "^0.0",
     "custom-electron-titlebar": "^3.2.2-hotfix62",
     "fontsource-roboto": "^2.1.4",
     "material-icons-font": "^2.0.0",
