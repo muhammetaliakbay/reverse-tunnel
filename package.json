@@ -35,6 +35,7 @@
     "webpack-node-externals": "^1.7.2"
   },
   "scripts": {
+    "publish-public": "npm publish --access public",
     "start": "electron .",
     "start-inspect": "electron . --inspect=12345",
     "install": "npm run build",
