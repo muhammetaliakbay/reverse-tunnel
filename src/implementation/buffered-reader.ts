@@ -1,7 +1,9 @@
 import {StructureChecker} from '@muhammetaliakbay/structure-check';
 
+export class EOFException extends Error {}
+
 export class BufferedReader {
-    private stack: Buffer[] = [];
+    private stack: (Buffer | EOFException)[] = [];
     private queue: {
         buffer: Buffer;
         resolve(length: number): void;
@@ -18,6 +20,9 @@ export class BufferedReader {
                             throw new Error('bug.');
                         }
                         const layer = this.stack[0];
+                        if (layer instanceof EOFException) {
+                            throw layer;
+                        }
                         length = Math.min(buffer.length, layer.length);
                         const layerNext = layer.subarray(length);
                         if (layerNext.length > 0) {
@@ -60,10 +65,19 @@ export class BufferedReader {
         }
     }
 
+    end(): void {
+        this.stack.push(new EOFException());
+        this.notify();
+    }
+
     notify(): void {
         while (this.stack.length > 0 && this.queue.length > 0) {
             const q = this.queue.splice(0, 1)[0];
             const layer = this.stack[0];
+            if (layer instanceof EOFException) {
+                q.reject(layer);
+                continue;
+            }
             const length = Math.min(q.buffer.length, layer.length);
             const layerNext = layer.subarray(length);
             if (layerNext.length > 0) {
@@ -84,8 +98,12 @@ export class BufferedReader {
     }
 
     leave(): Buffer {
+        const eof = this.stack.find(layer => layer instanceof EOFException);
+        if (eof != null) {
+            throw eof;
+        }
         const total = Buffer.concat(
-            this.stack
+            this.stack as Buffer[]
         );
         this.stack.splice(0, this.stack.length);
         return total;

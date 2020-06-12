@@ -188,7 +188,7 @@ export class TunnelConnection {
         return CheckResult.OK;
     }
 
-    static async listen(listenInfo: ListenInfo): Promise<TunnelConnection> {
+    static async listen(listenInfo: ListenInfo): Promise<void> {
         const connection = await TunnelConnection.connect(listenInfo.server);
 
         try {
@@ -207,31 +207,27 @@ export class TunnelConnection {
 
                 listenInfo.onListening?.();
 
-                (async () => {
-                    while(true) {
+                while(true) {
 
-                        const packet = await connection.socketChannel.extendedReader.readJSON(
-                            IncomingConnectionPacket
-                        );
+                    const packet = await connection.socketChannel.extendedReader.readJSON(
+                        IncomingConnectionPacket
+                    );
 
-                        if (packet.type === 'incoming') {
+                    if (packet.type === 'incoming') {
 
-                            (async () => {
-                                await TunnelConnection.join({
-                                    server: listenInfo.server,
-                                    destination: listenInfo.destination,
-                                    socket: packet.socket
-                                });
-                            }) ().catch(reason => console.error(new Error(reason)));
+                        (async () => {
+                            await TunnelConnection.join({
+                                server: listenInfo.server,
+                                destination: listenInfo.destination,
+                                socket: packet.socket
+                            });
+                        }) ().catch(reason => console.error(new Error(reason)));
 
-                        } else {
-                            throw new Error('bug.');
-                        }
-
+                    } else {
+                        throw new Error('bug.');
                     }
-                }) () .catch(reason => console.error(new Error(reason)));
 
-                return connection;
+                }
 
             } else {
                 throw new Error('bug.');

@@ -15,10 +15,12 @@ export class SocketChannel {
         this.socket.once('close', this.onClose = had_error => {
             this.socket.removeListener('data', this.onData);
             this.socket.removeListener('error', this.onError);
+            this.reader.end();
         });
         this.socket.once('error', this.onError = error => {
             this.socket.removeListener('data', this.onData);
             this.socket.removeListener('close', this.onClose);
+            this.reader.end();
         });
     }
 
