@@ -14,10 +14,12 @@ function createWindow () {
     });
 
     // and load the index.html of the app.
-    win.loadFile('bundle/index.html');
+    win.loadFile('./bundle/index.html');
 
     // Open the DevTools.
-    win.webContents.openDevTools();
+    if (process.argv.includes('--dev')) {
+        win.webContents.openDevTools();
+    }
     win.removeMenu();
 }
 
