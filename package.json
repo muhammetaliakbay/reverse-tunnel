@@ -16,7 +16,9 @@
     "start-inspect": "electron . --inspect=12345",
     "build": "webpack",
     "build-watch": "webpack --watch --mode=development",
-    "pack": "electron-builder"
+
+    "pack-win": "electron-builder --win portable",
+    "release-win": "npm run pack-win -- --publish always"
   },
   "build": {
     "directories": {
@@ -25,7 +27,10 @@
     "files": [
       "bundle/**",
       "node_modules/**"
-    ]
+    ],
+    "win": {
+      "publish": ["github"]
+    }
   },
   "devDependencies": {
     "node-sass": "^4.14.1",
